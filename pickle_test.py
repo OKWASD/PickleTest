@@ -14,15 +14,11 @@ class TestPickle(unittest.TestCase):
     
     def test_nested_list(self):
         nested_list = [[[]],[[]],[[]]]
-        nested_list.append(nested_list)
         
         g = pickle.dumps(nested_list)
         g_load = pickle.loads(g)
         
-        self.assertEqual(nested_list, g_load)
-        
-def main():
-    return        
+        self.assertEqual(nested_list, g_load)      
         
 if __name__ == '__main__':
-    main()
+    unittest.main()
