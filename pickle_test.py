@@ -2,8 +2,10 @@ import pickle
 import math
 import unittest
 import hashlib
+from PIL import Image as PImage
 
 class TestPickle(unittest.TestCase):
+
     def test_associative(self):
         db =  100* math.pi
         db2 = math.pi * 100 # Floating-point calculation
@@ -13,32 +15,23 @@ class TestPickle(unittest.TestCase):
         
         self.assertEqual(b, u)
     
-    def test_nested_list(self):
-        nested_list = [[[]],[[]],[[]]]
+    def test_reversed_dict(self):
         
-        g = pickle.dumps(nested_list)
-        g_load = pickle.loads(g)
-        
-        self.assertEqual(nested_list, g_load)
-        
-    def test_hashing_equal(self):
-        #Vi hashar 2st och self.assertEqual()
-        
-        db = pickle.dumps(first_to_second(1,2))
-        db1 = pickle.dumps(second_to_first(1,2))
-        
-        hashed_db = hashlib.sha256(db)
-        hashed_db1 = hashlib.sha256(db1)
-                
-        self.assertEqual(hashed_db.hexdigest(), hashed_db1.hexdigest())
+        db = pickle.dumps({"name": "Johannes", "number": 420})
+        db1 = pickle.dumps({"number": 420, "name": "Johannes"})
 
+        self.assertNotEqual(db, db1)
 
+    def test_tuple(self):
 
-def first_to_second(a,b):
-    return a + b
+        db = pickle.dumps((2, "Test"))
+        db1 = pickle.dumps(("Test", 2))
 
-def second_to_first(a,b):
-    return b + a
-        
-if __name__ == '__main__':
-    unittest.main()
+        self.assertNotEqual(pickle.loads(db), pickle.loads(db1))
+
+    def test_image(self):
+        img = PImage.open("test.png")
+        img_dump = pickle.dumps(img)
+        img_load = pickle.loads(img_dump)
+
+        self.assertEqual(img, img_load)
