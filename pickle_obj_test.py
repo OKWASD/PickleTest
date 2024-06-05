@@ -71,7 +71,7 @@ class PickleFuncTest(unittest.TestCase):
         self.assertEqual(data.data, unloaded.data)
 
     def test_nested_dict(self):
-        """13. Test pickling nested list"""
+        """13. Test pickling nested dict"""
         nested_dict = {'value': {"lock": "key"} ,
                        'value2': {"name": "user"},
                        'value3':{"animal": "dog"}}
@@ -80,7 +80,7 @@ class PickleFuncTest(unittest.TestCase):
         self.assertEqual(pickle.loads(result),nested_dict)
 
     def test_char_as_key(self):
-        """14. Test pickling with random string"""
+        """14. Test pickling with random string as key"""
         random_ascii_string =  ''.join(chr(random.randint(1,128)) for _ in range(1000))
         data = {random_ascii_string: "hej"}
         dump_db = pickle.dumps(data)

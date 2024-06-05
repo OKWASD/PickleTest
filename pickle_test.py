@@ -6,6 +6,7 @@ import random
 import lorem
 from PIL import Image as PImage
 import os
+import cmath
 
 class TestPickle(unittest.TestCase):
     """Test cases for pickling"""
@@ -21,7 +22,7 @@ class TestPickle(unittest.TestCase):
         self.assertEqual(load_data, load_data2)
 
     def test_tuple(self):
-        """18. Test if touples can be pickled"""
+        """18. Test if tuples can be pickled"""
         data = (2, "Test")
         data1 = pickle.dumps(data)
         load_data = pickle.loads(data1)
@@ -66,3 +67,48 @@ class TestPickle(unittest.TestCase):
         load_dump1 = pickle.loads(load_dump2)
 
         self.assertEqual(dump, load_dump1)
+    
+    def test_pickle_true(self):
+        dump = pickle.dumps(True)
+        self.assertEqual(True, pickle.loads(dump))
+
+    def test_pickle_none(self):
+        dump = pickle.dumps(None)
+        self.assertEqual(None, pickle.loads(dump))
+
+    def test_pickle_false(self):
+        dump = pickle.dumps(False)
+        self.assertEqual(False, pickle.loads(dump))
+    
+    def test_pickle_inf(self):
+        dump = pickle.dumps(float('inf'))
+        self.assertEqual(float('inf'), pickle.loads(dump))
+
+    def test_pickle_negative_inf(self):
+        dump = pickle.dumps(float('-inf'))
+        self.assertEqual(float('-inf'), pickle.loads(dump))
+    
+    def test_complex_numbers(self):
+        number = complex(1,2)
+        dump = pickle.dumps(number)
+        self.assertEqual(number, pickle.loads(dump))
+    
+    def test_structure_set(self):
+        test_set = {"apple", "banana", "cherry"}
+        dump = pickle.dumps(test_set)
+        self.assertEqual(test_set, pickle.loads(dump))
+    
+    def test_bytes(self):
+        data = b'101'
+        dump = pickle.dumps(data)
+        self.assertEqual(data, pickle.loads(dump))
+
+    def test_bytearray(self):
+        numbers = [1, 3, 5, 7, 11]
+        numbers_bytearray = bytearray(numbers)
+        dump = pickle.dumps(numbers_bytearray)
+        self.assertEqual(numbers_bytearray, pickle.loads(dump))
+
+    def test_ellipsis(self):
+        dump = pickle.dumps(...)
+        self.assertEqual(..., pickle.loads(dump))
