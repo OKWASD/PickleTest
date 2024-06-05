@@ -5,32 +5,32 @@ import pickle
 
 class PickleFuncTest(unittest.TestCase):
     """Testing pickling functions"""
-    def test_hashing_equal(self):
-        """Test whether a function containing add function is pickled correctly"""
+    def test_add_operator(self):
+        """1. Test whether a function containing add function is pickled correctly"""
         data = pickle.dumps(add_operator)
         load_data = pickle.loads(data)
-        self.assertEqual(hash(add_operator), hash(load_data))
+        self.assertEqual(3, load_data(1,2))
 
     def test_or_operator(self):
-        """Test whether a function containing the or logic operator is pickled correctly"""
+        """2. Test whether a function containing the or logic operator is pickled correctly"""
         data = pickle.dumps(or_operator)
         load_data = pickle.loads(data)
-        self.assertEqual(hash(or_operator), hash(load_data))
+        self.assertEqual(3, load_data(1,2))
 
     def test_xor_operator(self):
-        """Tests XOR operator before and after loading"""
+        """3. Tests XOR operator before and after loading"""
         data = pickle.dumps(xor_operator)
         load_data = pickle.loads(data)
-        self.assertEqual(hash(xor_operator), hash(load_data))
+        self.assertEqual(2, load_data(1,3))
 
     def test_and_operator(self):
-        """Testing and operator"""
+        """4. Testing and operator"""
         data = pickle.dumps(and_operator)
         load_data = pickle.loads(data)
-        self.assertEqual(hash(and_operator), hash(load_data))
+        self.assertEqual(1, load_data(1,3))
 
     def test_lambda_func(self):
-        """Testing lambda functions"""
+        """5. Testing lambda functions"""
         og_lamb = lambda x: x * 2
 
         try:

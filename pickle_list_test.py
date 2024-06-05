@@ -9,7 +9,7 @@ def same_hash(a_variable,b_variable):
 class PickleListTest(unittest.TestCase):
     """Class containing all tests associated with lists"""
     def test_deep_list(self):
-        """"Test if pickle can handle deep lists"""
+        """"6. Test if pickle can handle deep lists"""
         data = [[]]
         nested = data[0]
         for _ in range(300):
@@ -22,9 +22,9 @@ class PickleListTest(unittest.TestCase):
         self.assertEqual(data, loaded_data)
 
     def test_double_list(self):
-        """Tests how pickling handles nested lists."""
+        """7. Tests how pickling handles nested lists."""
         self.assertEqual(pickle.dumps([[],[]]), pickle.dumps([[],[]]))
 
     def test_double_false_list(self):
-        """Tests if two lists with different orders are considered equal when pickled."""
+        """8. Tests if two lists with different orders are considered equal when pickled."""
         self.assertNotEqual(pickle.dumps([[1],[2]]), pickle.dumps([[2],[1]]))

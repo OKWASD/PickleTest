@@ -35,7 +35,7 @@ class MyClassEq:
 class PickleFuncTest(unittest.TestCase):
     """Class containing all tests"""
     def test_reversed_dict(self):
-        """Tests if pickling is dependent on order of list keys"""
+        """9. Tests if pickling is dependent on order of list keys"""
         obj = {"name": "Karl", "number": 420}
         obj2 = {"number": 420,"name": "Karl"}
         data = pickle.dumps(obj)
@@ -46,7 +46,7 @@ class PickleFuncTest(unittest.TestCase):
         self.assertNotEqual(load_db, load_db2)
 
     def test_class(self):
-        """Tests if pickling changes the class instance"""
+        """10. Tests if pickling changes the class instance"""
         data = MyClass(42)
         test_db = pickle.dumps(data)
         unloaded = pickle.loads(test_db)
@@ -54,7 +54,7 @@ class PickleFuncTest(unittest.TestCase):
         self.assertEqual(data, unloaded)
 
     def test_class_eq(self):
-        """Tests if a class instance retains its equality after pickling and then loading"""
+        """11. Tests if a class instance retains its equality after pickling and then loading"""
         data = MyClassEq(40, 42)
         pickled = pickle.dumps(data)
 
@@ -63,7 +63,7 @@ class PickleFuncTest(unittest.TestCase):
         self.assertEqual(data, load_pickle)
 
     def test_value_of_class(self):
-        """Tests if pickling changes the properties of a class instance"""
+        """12. Tests if pickling changes the properties of a class instance"""
         data = MyClass(42)
         test_db = pickle.dumps(data)
         unloaded = pickle.loads(test_db)
@@ -71,7 +71,7 @@ class PickleFuncTest(unittest.TestCase):
         self.assertEqual(data.data, unloaded.data)
 
     def test_nested_dict(self):
-        """Test pickling nested list"""
+        """13. Test pickling nested list"""
         nested_dict = {'value': {"lock": "key"} ,
                        'value2': {"name": "user"},
                        'value3':{"animal": "dog"}}
@@ -80,7 +80,7 @@ class PickleFuncTest(unittest.TestCase):
         self.assertEqual(pickle.loads(result),nested_dict)
 
     def test_char_as_key(self):
-        """Test if random string can """
+        """14. Test pickling with random string"""
         random_ascii_string =  ''.join(chr(random.randint(1,128)) for _ in range(1000))
         data = {random_ascii_string: "hej"}
         dump_db = pickle.dumps(data)
