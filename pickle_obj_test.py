@@ -9,28 +9,25 @@ class MyClass:
 
 class pickle_func_test(unittest.TestCase):
     def test_reversed_dict(self):
-        
-        db = pickle.dumps({"name": "Johannes", "number": 420})
-        db1 = pickle.dumps({"number": 420, "name": "Johannes"})
+        obj = {"name": "Karl", "number": 420}
+        obj2 = {"number": 420,"name": "Karl"}
+        db = pickle.dumps(obj)
+        db2 = pickle.dumps(obj2)
+        load_db = pickle.loads(db)
+        load_db2 = pickle.loads(db2)
 
-        self.assertNotEqual(db, db1)
+        self.assertNotEqual(load_db, load_db2)
 
     def test_class(self):
-
         db = MyClass(42)
-
         test_db = pickle.dumps(db)
-        
         unloaded = pickle.loads(test_db)
-        
-        self.assertNotEqual(db, unloaded)
-    
+
+        self.assertEqual(db, unloaded)
+
     def test_value_of_class(self):
-
         db = MyClass(42)
-
         test_db = pickle.dumps(db)
-        
         unloaded = pickle.loads(test_db)
 
         self.assertEqual(db.data, unloaded.data)
@@ -43,13 +40,9 @@ class pickle_func_test(unittest.TestCase):
 
     def test_char_as_key(self):
         random_ascii_string =  ''.join(chr(random.randint(1,128)) for _ in range(1000))
-        
-        db = {
-            random_ascii_string: "hej"
-        }
-        
+        db = {random_ascii_string: "hej"}
         dump_db = pickle.dumps(db)
         load_db = pickle.loads(dump_db)
-
-        self.assertEqual(db, load_db)
         
+        self.assertEqual(db, load_db)
+
