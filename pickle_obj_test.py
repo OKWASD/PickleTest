@@ -1,6 +1,7 @@
 import unittest
 import pickle
 import hashlib
+import random
 
 class MyClass:
     def __init__(self, data):
@@ -35,8 +36,20 @@ class pickle_func_test(unittest.TestCase):
         self.assertEqual(db.data, unloaded.data)
 
     def test_nested_dict(self):
-        nested_dict = {'value': {"lock": "key"} , 'hello': {"name": "user"}, 'boy':{"animal": "dog"}}
+        nested_dict = {'value': {"lock": "key"} , 'value2': {"name": "user"}, 'value3':{"animal": "dog"}}
         result = pickle.dumps(nested_dict)
 
         self.assertEqual(pickle.loads(result),nested_dict)
 
+    def test_char_as_key(self):
+        random_ascii_string =  ''.join(chr(random.randint(1,128)) for _ in range(1000))
+        
+        db = {
+            random_ascii_string: "hej"
+        }
+        
+        dump_db = pickle.dumps(db)
+        load_db = pickle.loads(dump_db)
+
+        self.assertEqual(db, load_db)
+        

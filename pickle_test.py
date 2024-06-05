@@ -2,7 +2,10 @@ import pickle
 import math
 import unittest
 import hashlib
+import lorem
+import random
 from PIL import Image as PImage
+import sys
 
 class TestPickle(unittest.TestCase):
 
@@ -35,3 +38,28 @@ class TestPickle(unittest.TestCase):
         img_load = pickle.loads(img_dump)
 
         self.assertEqual(img, img_load)
+
+    def test_file_hash(self):   
+        file = open('test.txt', "wb")
+        data = lorem.text()
+        pickle.dump(data,file)
+        file.close()
+        file = open('test.txt', "rb")
+        load_file = pickle.load(file)
+        hashed_load_file = hash(load_file)
+
+        self.assertEqual(hash(data), hashed_load_file)
+        file.close()
+    
+    def test_max_int(self):
+        max_int = sys.maxsize
+        random_int =  int(''.join(str(random.randint(1,9)) for _ in range(4300)))
+        
+        max_int_dumps = pickle.dumps(max_int)
+        max_int_loads = pickle.loads(max_int_dumps)
+
+        random_int_dumps = pickle.dumps(random_int)
+        random_int_loads = pickle.loads(random_int_dumps)
+        
+        self.assertEqual(max_int,max_int_loads)
+        self.assertEqual(random_int,random_int_loads)
