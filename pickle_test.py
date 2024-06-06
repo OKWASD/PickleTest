@@ -7,7 +7,9 @@ import os
 import lorem
 from PIL import Image as PImage
 
+
 class TestPickle(unittest.TestCase):
+     # pylint: disable=too-many-public-methods
     """Test cases for pickling"""
     def test_associative(self):
         """17. Test whether pickling is associative"""
@@ -151,3 +153,16 @@ class TestPickle(unittest.TestCase):
         data = {"key": {1,2,3,4}}
         dump = pickle.dumps(data)
         self.assertEqual(data, pickle.loads(dump))
+
+    def test_deep_dict(self):
+        """38. Testing if pickling can handle deep dictionaries"""
+        data = {"start": {}}
+        index = data["start"]
+        for _ in range(300):
+            index[str(_)] = {}
+            index = index[str(_)]
+
+        pickled_data = pickle.dumps(data)
+        unpickled_data = pickle.loads(pickled_data)
+
+        self.assertEqual(data, unpickled_data)
