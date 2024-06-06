@@ -1,2 +1,2 @@
 # PickleTest
-Pickle testing 
+We used PEP8 as coding standard.
