@@ -3,10 +3,9 @@ import pickle
 import math
 import unittest
 import random
+import os
 import lorem
 from PIL import Image as PImage
-import os
-import cmath
 
 class TestPickle(unittest.TestCase):
     """Test cases for pickling"""
@@ -67,48 +66,88 @@ class TestPickle(unittest.TestCase):
         load_dump1 = pickle.loads(load_dump2)
 
         self.assertEqual(dump, load_dump1)
-    
+
     def test_pickle_true(self):
+        """"23. Testing if pickling can handle the value True"""
         dump = pickle.dumps(True)
         self.assertEqual(True, pickle.loads(dump))
 
     def test_pickle_none(self):
+        """"24. Testing if pickling can handle the value None"""
         dump = pickle.dumps(None)
         self.assertEqual(None, pickle.loads(dump))
 
     def test_pickle_false(self):
+        """"25. Testing if pickling can handle the value False"""
         dump = pickle.dumps(False)
         self.assertEqual(False, pickle.loads(dump))
-    
+
     def test_pickle_inf(self):
+        """"26. Testing if pickling can handle Infinity"""
         dump = pickle.dumps(float('inf'))
         self.assertEqual(float('inf'), pickle.loads(dump))
 
     def test_pickle_negative_inf(self):
+        """"27. Testing if pickling can handle negative Infinity"""
         dump = pickle.dumps(float('-inf'))
         self.assertEqual(float('-inf'), pickle.loads(dump))
-    
+
     def test_complex_numbers(self):
+        """"28. Testing if pickling can handle complex numbers"""
         number = complex(1,2)
         dump = pickle.dumps(number)
         self.assertEqual(number, pickle.loads(dump))
-    
+
     def test_structure_set(self):
+        """29. Testing if pickling changes a set"""
         test_set = {"apple", "banana", "cherry"}
         dump = pickle.dumps(test_set)
         self.assertEqual(test_set, pickle.loads(dump))
-    
+
     def test_bytes(self):
+        """30. Testing if pickling changes bytes"""
         data = b'101'
         dump = pickle.dumps(data)
         self.assertEqual(data, pickle.loads(dump))
 
     def test_bytearray(self):
+        """31. Testing if pickling changes a bytearray"""
         numbers = [1, 3, 5, 7, 11]
         numbers_bytearray = bytearray(numbers)
         dump = pickle.dumps(numbers_bytearray)
         self.assertEqual(numbers_bytearray, pickle.loads(dump))
 
     def test_ellipsis(self):
+        """32. Testing if pickling can handle ellipsis"""
         dump = pickle.dumps(...)
         self.assertEqual(..., pickle.loads(dump))
+
+    def test_ellipsis_in_list(self):
+        """33. Testing if pickling can handle ellipsis in a list"""
+        data = [...]
+        dump = pickle.dumps(data)
+        self.assertEqual(data, pickle.loads(dump))
+
+    def test_ellipsis_in_dict(self):
+        """34. Testing if pickling can handle ellipsis in a dictionary"""
+        data = {"key": ...}
+        dump = pickle.dumps(data)
+        self.assertEqual(data, pickle.loads(dump))
+
+    def test_ellipsis_in_set(self):
+        """35. Testing if pickling can handle ellipsis in a set"""
+        data = {...}
+        dump = pickle.dumps(data)
+        self.assertEqual(data, pickle.loads(dump))
+
+    def test_ellipsis_in_touple(self):
+        """36. Testing if pickling can handle ellipsis in a tuple"""
+        data = ("key", ...)
+        dump = pickle.dumps(data)
+        self.assertEqual(data, pickle.loads(dump))
+
+    def test_set_in_dict(self):
+        """37. Testing if pickling can handle sets in dictionaries"""
+        data = {"key": {1,2,3,4}}
+        dump = pickle.dumps(data)
+        self.assertEqual(data, pickle.loads(dump))
